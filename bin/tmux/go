@@ -1,0 +1,10 @@
+rename-window source
+send-keys "cd ${CWD}" enter C-l
+send-keys 'git status' enter
+
+split-window -h -c "${CWD}"
+send-keys 'make check' enter
+
+select-pane -t1
+
+

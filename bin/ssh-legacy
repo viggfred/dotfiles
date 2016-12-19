@@ -1,0 +1,3 @@
+#!/bin/bash
+
+exec ssh -oHostKeyAlgorithms=+ssh-dss -oKexAlgorithms=+diffie-hellman-group1-sha1 $@

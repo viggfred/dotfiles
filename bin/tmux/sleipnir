@@ -1,0 +1,16 @@
+rename-window sleipnir
+send-keys 'cd ~/work/sleipnir/' enter C-l
+send-keys 'git status' enter
+
+split-window -h -c ~/work/sleipnir/
+send-keys 'make -f meet.mk develop' enter C-l
+
+
+new-window -c ~/work/mypages/ -n mypages
+send-keys 'git status' enter
+
+split-window -h -c ~/work/mypages/
+send-keys 'make develop' enter C-l
+
+select-window -t sleipnir
+select-pane -t1

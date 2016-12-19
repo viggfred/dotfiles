@@ -1,0 +1,29 @@
+#!/bin/bash
+DIRNAME=`dirname $0`
+PROJECT=`basename $0`
+TMUX_SOURCE="$DIRNAME/../tmux/$PROJECT"
+WORKING_DIR="~/"
+
+if [ ! -z $1 ]; then
+    PROJECT=$1
+    WORKING_DIR="$2/"
+    TMUX_SOURCE="$DIRNAME/../tmux/go"
+    export CWD=${WORKING_DIR}
+fi
+                  
+
+echo "SOURCE: ${TMUX_SOURCE}"
+echo "PROJECT: ${PROJECT}"
+echo "WORKING_DIR: '${WORKING_DIR}'"
+
+tmux has-session -t "${PROJECT}" 2>/dev/null
+
+if [ "$?" -eq 1 ] ; then
+    echo "Starting: $PROJECT"
+    #tmux new-session -d -c "${WORKING_DIR}" -s "${PROJECT}"
+    tmux new-session -d -s "${PROJECT}"
+    tmux source-file "${TMUX_SOURCE}"
+fi
+
+echo "Attaching to: '$PROJECT'"
+exec tmux attach-session -t "${PROJECT}"

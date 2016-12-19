@@ -1,0 +1,18 @@
+_project()
+{
+    local files cur prev gopath gobase goprojects otherprojects allprojects dotfiles
+    cur=${COMP_WORDS[COMP_CWORD]}
+	prev=${COMP_WORDS[COMP_CWORD-1]}
+
+    gopath=~/work/gocode/src/bitbucket.org/videxio/
+    gobase=videxio/
+
+    goprojects=$(find $gopath -maxdepth 1 -type d -printf '%f\n' | grep -v $gobase 2>/dev/null)
+    dotfiles=$(dirname $(readlink -f `which project`))/projects
+    otherprojects=$(find $dotfiles -maxdepth 1 -follow -type f -executable -printf '%f\n')
+    allprojects=$(echo "$goprojects $otherprojects" | grep -v "~$")
+    COMPREPLY=($(compgen -W "$allprojects" -- $cur))
+    return 0
+}
+
+complete -F _project project

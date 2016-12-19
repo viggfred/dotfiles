@@ -1,0 +1,16 @@
+#!/bin/bash
+go_path=~/work/gocode/src/bitbucket.org/videxio/$1
+project_path=`dirname $0`/projects/$1
+
+echo $go_path
+echo $project_path
+
+if [ -f $project_path ]; then
+    exec $project_path
+fi
+if [[ -d "${go_path}" ]]; then
+    exec `dirname $0`/tmux/run $1 "$go_path"
+fi
+
+echo "No such project: $1"
+exit 1
